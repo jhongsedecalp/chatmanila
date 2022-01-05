@@ -1,0 +1,22 @@
++--------------------------------------------------------------+
+             Change of Commands/New Commands                        
++--------------------------------------------------------------+
+~RS
+    .mylock    = .lockroom
+    .cbuff     = .croom
+    .rmkey     = .mykey
+    .rmdesc    = .mypaint
+    .lockrm    = .mylock
+    .reply     = replt to tell someone instead of .tell <user>
+    .criteria  = see the rules for promotions
+    .url       = links to other talkers
+    .admin     = the bicol channel staffs
+    .ctells    = clear the tells
+    .socials   = social commands listing
+    .taxi      = let you go into another room
+    .using     = sing a user with a tone
+    .ctopic    = clears the topic
+    .csite     = change your site
+ money system: = .bank/.pay/.cash
+~RS
++--------------------------------------------------------------+
