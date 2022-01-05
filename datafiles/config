@@ -1,0 +1,79 @@
+# Main config file for Amnuts 2.2.0
+
+INIT:
+verification       amnuts220
+mainport           8787
+wizport            7001
+linkport           7003
+max_users          50
+max_clones         5
+heartbeat          2
+login_idle_time    3600
+user_idle_time     3600
+time_out_afks      NO
+ban_swearing       MIN 
+auto_connect       YES
+password_echo      NO
+ignore_sigterm     NO
+system_logging     ON
+colour_def         ON
+prompt_def         OFF
+charecho_def       OFF
+minlogin_level     NONE
+mesg_life          10
+mesg_check_time    01:00
+min_private        1
+rem_user_maxlevel  USER
+rem_user_deflevel  CHATTER
+wizport_level      CARE9
+time_out_maxlevel  CARE9
+crash_action       NONE
+auto_purge         YES
+allow_recaps       YES
+auto_promote       YES
+personal_rooms     YES
+startup_room_parse NO
+random_motds       YES
+resolve_ip         AUTO
+flood_protect      ON
+
+ROOMS:
+# format
+# map  label  name            links              netlink connections
+general re  stlife            cp,s1,mo,cu	 PUB
+general cp  car_park          re                 PUB CONNECT talker1
+general s1  store_room        re,mo,s2,wr,cra   
+general mo  main_office       re,s1,li,cr,to,dr  PUB
+general ja  jail              re
+general s2  back_store        s1,to,cr
+general li  library           mo,cr,kz
+general cr  conference        li,mo,s2
+general to  toilets           mo,s2
+general dr  directors         mo                 PUB
+general wr  wizroom           s1                 PRIV
+general cu  cupboard          re                 PRIV
+general kz  kelotz            li                 PRIV
+general it  itdhenz           cu                 PRIV
+general cra crate             s1,box           
+general box box               cra
+
+TOPICS:
+# format
+# room name     topic
+stlife          Welcome to New Chat Manila
+jail            You Are Under Arrest!
+car_park        Please Park Correctly
+store_room      Computer time
+library         Please Keep Quit
+toilets         Concentrate Here
+directors       Mess With The Best!
+kelotz          Jedi Knight Lair
+
+# Link to the 2nd talker. You may need to put the machine name rather than
+# localhost here when you're running the 2nd talker on the same machine, it
+# depends on how the /etc/hosts file is set up and also the resolver.
+# none of these are real talkers or sites!
+
+SITES:
+# format
+# link name    address               password
