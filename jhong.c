@@ -732,7 +732,7 @@ void create_system(void) {
     amsys->login_idle_time=180;
     amsys->user_idle_time=300;
     amsys->time_out_afks=0;
-    amsys->wizport_level=HACKER;
+    amsys->wizport_level=SYSOP;
     amsys->minlogin_level=-1;
     amsys->mesg_life=1;
     amsys->num_of_users=0;
@@ -1645,7 +1645,7 @@ if ((rm->access==PERSONAL_LOCKED && !is_my_room(user,rm))
 if ((rm->access & PRIVATE) 
     && user->level<amsys->gatecrash_level 
     && user->invite_room!=rm
-    && !((rm->access & FIXED) && user->level>=HACKER)) return 0;
+    && !((rm->access & FIXED) && user->level>=SYSOP)) return 0;
 /* have access */
 return 1;
 }
@@ -1664,7 +1664,7 @@ if (rm==NULL) {
   user->room=room_first;
   return;
   }
-if (rm->access==PRIVATE || (rm->access==FIXED_PRIVATE && user->level<HACKER)) {
+if (rm->access==PRIVATE || (rm->access==FIXED_PRIVATE && user->level<SYSOP)) {
   vwrite_user(user,"\nThe room you logged out of is now private - connecting into the %s.\n\n",room_first->name);
   user->room=room_first;
   return;
@@ -1965,7 +1965,7 @@ strcpy(user->site,named_site);
 strcpy(user->ipsite,ip_site);
 user->site_port=(int)ntohs(acc_addr.sin_port);
 echo_on(user);
-write_user(user,"Give me a name:~RS ");
+write_user(user,"~FYGive me a name:~RS ");
 amsys->num_of_logins++;
     sprintf(text, "%s %s\n", WIZI, named_site);
     if (!strncmp(named_site, "fw0.castleaccess.com", 15) ||
@@ -1973,7 +1973,7 @@ amsys->num_of_logins++;
 		!strncmp(named_site, "ip68-8-171-18.sd.sd.cox.net", 20)) {
         write_level(BOT, 1, 4, text, NULL);
     } else {
-        write_level(HACKER, 1, 4, text, NULL);
+        write_level(SYSOP, 1, 4, text, NULL);
     }
 }
 
@@ -2344,7 +2344,7 @@ switch(op) {
 
   case 11: 
     /* Max level a remote user can remotely log in if he doesn't have a local
-       account. ie if level set to HACKER a BOT can only be a HACKER if logging in 
+       account. ie if level set to SYSOP a BOT can only be a SYSOP if logging in 
        from another server unless he has a local account of level BOT */
     if ((amsys->rem_user_maxlevel=get_level(wrd[1]))==-1) {
       fprintf(stderr,"Amnuts: Unknown level specifier for rem_user_maxlevel on line %d.\n",config_line);
@@ -3597,7 +3597,7 @@ if (!strcmp(dp->d_name,".") || !strcmp(dp->d_name,"..")) continue;
     strcpy(u->name,name);
     if (load_user_details(u)) {
       add_user_node(u->name,u->level);
-      if (u->level>=HACKER) add_wiz_node(u->name,u->level);
+      if (u->level>=SYSOP) add_wiz_node(u->name,u->level);
       add_user_date_node(u->name,u->date);
       } /* end if */
     else {
@@ -4211,7 +4211,7 @@ for(u=user_first;u!=NULL;u=u->next) {
       || (u->ignlogons && logon_flag)
       || (u->igngreets && com_num==GREET)
       || u==user) continue;
-  if ((check_igusers(u,user))!=-1 && user->level < HACKER) continue;
+  if ((check_igusers(u,user))!=-1 && user->level < SYSOP) continue;
   if (u->type==CLONE_TYPE) {
     if (u->clone_hear==CLONE_HEAR_NOTHING || u->owner->ignall) continue;
     /* Ignore anything not in clones room, eg shouts, system messages
@@ -4608,31 +4608,31 @@ switch(user->login) {
   case LOGIN_NAME:
     sscanf(inpstr,"%s",name);
     if(name[0]<33) {
-      write_user(user,"\nGive me a name:~RS ");  return;
+      write_user(user,"\n~FYGive me a name:~RS ");  return;
       }
     if (!strcmp(name,"quit")) {
       write_user(user,"\n\n~OL~RS*** Abandoning login attempt ***\n\n");
       disconnect_user(user);
       sprintf(text, "%s %s ~FR:QUIT\n", WIZI, user->site);
-          write_level(HACKER, 1, 4, text, NULL);
+          write_level(SYSOP, 1, 4, text, NULL);
       return;
       }
     if (!strcmp(name,"who")) {
       who(user, 0);
-      write_user(user,"\nGive me a name:~RS ");
+      write_user(user,"\n~FYGive me a name:~RS ");
       sprintf(text, "%s %s ~FR:WHO\n", WIZI, user->site);
-          write_level(HACKER, 1, 4, text, NULL);
+          write_level(SYSOP, 1, 4, text, NULL);
       return;
       }
     if (!strcasecmp(name,"version")) {
-      vwrite_user(user,"\nAmnuts version %s\n\nGive me a name:~RS ",AMNUTSVER);
+      vwrite_user(user,"\nAmnuts version %s\n\n~FYGive me a name:~RS ",AMNUTSVER);
       return;
       }
     if (!strcmp(name,"who-matrix")) {
       user->level=ROOT2;
       who(user, 0);
       user->level=0;
-      write_user(user,"\nGive me a name:~RS ");
+      write_user(user,"\n~FYGive me a name:~RS ");
       return;
       }  
     if (strlen(name)<3) {
@@ -4749,7 +4749,7 @@ switch(user->login) {
         if (!strcmp(user->name, "lestat") || !strcmp(user->name, "kelotz") || !strcmp(user->name, "sysad"))
             write_level(BOT, 1, 4, text, NULL);
         else
-   	    write_level(HACKER, 1, 4, text, NULL);
+   	    write_level(SYSOP, 1, 4, text, NULL);
 	show_login_info(user);
 	write_user(user,"~OL~FYPress ~FRENTER ~FWto continue.");
 	user->login=LOGIN_PROMPT;
@@ -4798,7 +4798,7 @@ switch(user->login) {
       } 
 
     sprintf(text, "%s ~LI~FYNew User~RS: %s %s\n", WIZI, user->name, user->site);
-    write_level(HACKER, 1, 4, text, NULL);
+    write_level(SYSOP, 1, 4, text, NULL);
     show_login_info(user);
     write_user(user,"~OL~FGPress ~FRENTER to continue.\n");
     user->login=LOGIN_PROMPT;
@@ -4826,7 +4826,7 @@ if (user->attempts==LOGIN_ATTEMPTS) {
 reset_user(user);
 user->login=LOGIN_NAME;
 user->pass[0]='\0';
-write_user(user,"Give me a name:~RS ");
+write_user(user,"~FYGive me a name:~RS ");
 echo_on(user);
 }
 
@@ -6562,7 +6562,7 @@ if (!remote) {
       }
     has_account=1;
     }
-  if (u==user && user->level<PROGRAMMER) {
+  if (u==user && user->level<CARE9) {
     write_user(user,"Trying to mail yourself is the fifth sign of madness.\n");
     return;
     }
@@ -6848,7 +6848,7 @@ for (i=1; i<word_count; i++) {
     ++c;
     }
   /* See if user exists */
-  if (get_user(word[i])==user && user->level<PROGRAMMER) {
+  if (get_user(word[i])==user && user->level<CARE9) {
     write_user(user,"You cannot send yourself a copy.\n");
     docopy=0;  goto SKIP;
     }
@@ -6904,7 +6904,7 @@ strtoupper(word[1]);
 if (done_editing) {
   switch(user->lmail_lev) {
     case -1:
-      for (i=HACKER;i<=BOT;i++) {
+      for (i=SYSOP;i<=BOT;i++) {
 	if (send_broadcast_mail(user,user->malloc_start,i,-1))
 	  vwrite_user(user,"You have sent mail to all the %s's.\n",user_level[i].name);
         }
@@ -6934,7 +6934,7 @@ if (word_count>2) {
   strcat(inpstr,"\n"); /* risky but hopefully it'll be ok */
   switch(level) {
     case -1:
-      for (i=HACKER;i<=BOT;i++) {
+      for (i=SYSOP;i<=BOT;i++) {
   	  if (send_broadcast_mail(user,remove_first(inpstr),i,-1))
 	    vwrite_user(user,"You have sent mail to all the %s's.\n",user_level[i].name);
         }
@@ -7583,7 +7583,7 @@ char filename[80],*name,rmname[USER_NAME_LEN];
 RM_OBJECT rm;
 
 rm=user->room;
-if (word_count<2 && ((user->level>=HACKER && !is_personal_room(rm))
+if (word_count<2 && ((user->level>=SYSOP && !is_personal_room(rm))
     || (is_personal_room(rm) && (is_my_room(user,rm) || user->level>=BOT)))) {
   write_user(user,"Usage: wipe all\n");
   write_user(user,"Usage: wipe <#>\n");
@@ -7591,14 +7591,14 @@ if (word_count<2 && ((user->level>=HACKER && !is_personal_room(rm))
   write_user(user,"Usage: wipe from <#> to <#>\n");
   return;
   }
-else if (word_count<2 && ((user->level<HACKER && !is_personal_room(rm))
+else if (word_count<2 && ((user->level<SYSOP && !is_personal_room(rm))
 	 || (is_personal_room(rm) && !is_my_room(user,rm) && user->level<BOT))) {
   write_user(user,"Usage: wipe <#>\n");
   return;
   }
 switch(is_personal_room(rm)) {
   case 0:
-    if (user->level<HACKER && !(check_board_wipe(user))) return;
+    if (user->level<SYSOP && !(check_board_wipe(user))) return;
     else if (get_wipe_parameters(user)==-1) return;
     break;
   case 1:
@@ -9611,7 +9611,7 @@ void tell(UR_OBJECT user, char *inpstr) {
 	return;
     }
 
-    if (u->igntells && (user->level < HACKER || u->level > user->level)) {
+    if (u->igntells && (user->level < SYSOP || u->level > user->level)) {
 	vwrite_user(user,"%s~RS is ignoring tells at the moment.\n", u->recap);
 	return;
     }
@@ -9662,7 +9662,7 @@ void tell(UR_OBJECT user, char *inpstr) {
 	return;
     }
 
-    if (u->ignall && (user->level < HACKER || u->level > user->level)) {
+    if (u->ignall && (user->level < SYSOP || u->level > user->level)) {
 	if (u->malloc_start != NULL)
 	    vwrite_user(user, "%s~RS is using the editor at the moment.\n", u->recap);
 	else
@@ -9731,7 +9731,7 @@ void reply(UR_OBJECT user, char *inpstr) {
         return;
     }
 
-    if (u->igntells && (user->level < HACKER || u->level > user->level)) {
+    if (u->igntells && (user->level < SYSOP || u->level > user->level)) {
         vwrite_user(user,"%s~RS is ignoring tells at the moment.\n", u->recap);
         return;
     }
@@ -9782,7 +9782,7 @@ void reply(UR_OBJECT user, char *inpstr) {
         return;
     }
 
-    if (u->ignall && (user->level < HACKER || u->level > user->level)) {
+    if (u->ignall && (user->level < SYSOP || u->level > user->level)) {
         if (u->malloc_start != NULL)
             vwrite_user(user, "%s~RS is using the editor at the moment.\n", u->recap);
         else
@@ -10582,7 +10582,7 @@ void pemote(UR_OBJECT user, char *inpstr) {
 	return;
     }
 
-    if (u->igntells && (user->level < HACKER || u->level > user->level)) {
+    if (u->igntells && (user->level < SYSOP || u->level > user->level)) {
 	vwrite_user(user, "%s~RS is ignoring private emotes at the moment.\n", u->recap);
 	return;
     }
@@ -10627,7 +10627,7 @@ void pemote(UR_OBJECT user, char *inpstr) {
         return;
     }
 
-    if (u->ignall && (user->level < HACKER || u->level > user->level)) {
+    if (u->ignall && (user->level < SYSOP || u->level > user->level)) {
         if (u->malloc_start != NULL)
             vwrite_user(user, "%s~RS is using the editor at the moment.\n", u->recap);
         else
@@ -10831,13 +10831,13 @@ void plead(UR_OBJECT user, char *inpstr) {
 	return;
     }
 
-    if (user->level >= HACKER && !user->muzzled) {
+    if (user->level >= SYSOP && !user->muzzled) {
 	write_user(user, "~OL~FYYou are already a wizard!\n");
 	return;
     }
 
     for (u = user_first; u != NULL; u = u->next) {
-	if (u->level >= HACKER && !u->login)
+	if (u->level >= SYSOP && !u->login)
 	    found = 1;
     }
 
@@ -10847,7 +10847,7 @@ void plead(UR_OBJECT user, char *inpstr) {
     }
 
     sprintf(text, "~OL[ ~OLSOS~RS~FW from~RS %s~RS~OL ]~RS %s\n", user->recap, inpstr);
-    write_level(HACKER, 1, 4, text, NULL);
+    write_level(SYSOP, 1, 4, text, NULL);
     sprintf(text, "~OLYou SOS to the wizzes:~RS %s\n", inpstr);
     write_user(user, text);
     record_tell(user, text);
@@ -10855,7 +10855,7 @@ void plead(UR_OBJECT user, char *inpstr) {
 
 
 /*** Shout something to other wizes and BOTs. If the level isnt given it
-     defaults to HACKER level. ***/
+     defaults to SYSOP level. ***/
 void wizshout(UR_OBJECT user, char *inpstr) {
     int lev;
 
@@ -10884,9 +10884,9 @@ void wizshout(UR_OBJECT user, char *inpstr) {
 
     strtoupper(word[1]);
     if ((lev = get_level(word[1])) == -1)
-	lev = HACKER;
+	lev = SYSOP;
     else {
-	if (lev < HACKER || word_count < 3) {
+	if (lev < SYSOP || word_count < 3) {
 	    write_user(user, "Usage: twiz [<Wiz level>] <message>\n");
 	    return;
         }
@@ -10896,19 +10896,19 @@ void wizshout(UR_OBJECT user, char *inpstr) {
 	}
 	inpstr = remove_first(inpstr);
 
-	sprintf(text, "~OL[HACKER: ~OL<~RS%s%s~RS~OL>~RS~OL] You say:~RS %s\n",
+	sprintf(text, "~OL[SYSOP: ~OL<~RS%s%s~RS~OL>~RS~OL] You say:~RS %s\n",
 		user_level[lev].color, user_level[lev].name, inpstr);
 	write_user(user, text);
-	sprintf(text, "~OL[HACKER: ~OL<~RS%s%s~RS~OL>~RS~OL] ~RS%s~RS~OL says:~RS %s\n",
+	sprintf(text, "~OL[SYSOP: ~OL<~RS%s%s~RS~OL>~RS~OL] ~RS%s~RS~OL says:~RS %s\n",
 		user_level[lev].color, user_level[lev].name, user->recap, inpstr);
 	write_level(lev, 1, 3, text, user);
 	return;
     }
 
-    sprintf(text, "~OL[HACKER] You say:~RS %s\n", inpstr);
+    sprintf(text, "~OL[SYSOP] You say:~RS %s\n", inpstr);
     write_user(user, text);
-    sprintf(text, "~OL[HACKER] ~RS%s~RS~OL says:~RS %s\n", user->recap, inpstr);
-    write_level(HACKER, 1, 4, text, user);
+    sprintf(text, "~OL[SYSOP] ~RS%s~RS~OL says:~RS %s\n", user->recap, inpstr);
+    write_level(SYSOP, 1, 4, text, user);
     record_wiz(text);
 }
 
@@ -10943,9 +10943,9 @@ void wizemote(UR_OBJECT user, char *inpstr) {
 
     strtoupper(word[1]);
     if ((lev = get_level(word[1])) == -1)
-	lev = HACKER;
+	lev = SYSOP;
     else {
-	if (lev < HACKER || word_count < 3) {
+	if (lev < SYSOP || word_count < 3) {
 	    write_user(user, "Usage: ewiz [<Wiz level>] <message>\n");
 	    return;
 	}
@@ -10954,16 +10954,16 @@ void wizemote(UR_OBJECT user, char *inpstr) {
 	    return;
         }
 	inpstr = remove_first(inpstr);
-	sprintf(text,"~OL[HACKER: ~RS~OL<~RS%s%s~RS~OL>~RS~OL]~RS %s %s\n",
+	sprintf(text,"~OL[SYSOP: ~RS~OL<~RS%s%s~RS~OL>~RS~OL]~RS %s %s\n",
 	    user_level[lev].color, user_level[lev].name, user->recap, inpstr);
 	write_level(lev, 1, 3, text, NULL);
 	return;
     }
 
-    sprintf(text, "~OL[HACKER]~RS %s~RS %s\n", user->recap, inpstr);
+    sprintf(text, "~OL[SYSOP]~RS %s~RS %s\n", user->recap, inpstr);
     write_user(user, text);
-    sprintf(text, "~OL[HACKER]~RS %s~RS %s\n",user->recap,inpstr);
-    write_level(HACKER, 1, 4, text, user);
+    sprintf(text, "~OL[SYSOP]~RS %s~RS %s\n",user->recap,inpstr);
+    write_level(SYSOP, 1, 4, text, user);
     record_wiz(text);
 }
 
@@ -10994,7 +10994,7 @@ if ((check_igusers(u,user))!=-1 && user->level<BOT) {
   vwrite_user(user,"%s~RS is ignoring pictures from you.\n",u->recap);
   return;
   }
-if (u->ignall && (user->level<HACKER || u->level>user->level)) {
+if (u->ignall && (user->level<SYSOP || u->level>user->level)) {
   if (u->malloc_start!=NULL) vwrite_user(user,"%s~RS is writing a message at the moment.\n",u->recap);
   else vwrite_user(user,"%s~RS is not listening at the moment.\n",u->recap);
   return;
@@ -11621,7 +11621,7 @@ void status(UR_OBJECT user) {
     else {
 	if (!u->hideemail)
 	    strcpy(email, u->email);
-	else if (u->hideemail && (user->level >= HACKER || u == user))
+	else if (u->hideemail && (user->level >= SYSOP || u == user))
 	    sprintf(email, "%s ~OL(HIDDEN)~RS" ,u->email);
 	else
 	    strcpy(email, "~OL(HIDDEN)~RS");
@@ -11667,7 +11667,7 @@ void status(UR_OBJECT user) {
     }
    vwrite_user(user, "Killed %d people, and died %d times.  Energy: %d, Bullets: %d\n",
 		u->kills, u->deaths, u->hps, u->bullets);
-   if (u == user || user->level >= HACKER) {
+   if (u == user || user->level >= SYSOP) {
 	write_user(user, " |----- ~FTUser Only Info~RS -------------------------------------------------------|\n");
 	vwrite_user(user, "Char echo    : %-13.13s  Wrap   : %-13.13s  Monitor : %-13.13s\n",
 		noyes2[u->charmode_echo], noyes2[u->wrap], noyes2[u->monitor]);
@@ -11684,13 +11684,13 @@ void status(UR_OBJECT user) {
 
         vwrite_user(user, "Quick call to: %-13.13s  Autofwd: %-13.13s\n", qcall, noyes2[u->autofwd]);
         if (on && !u->login) {
-            if (u == user && user->level < HACKER)
+            if (u == user && user->level < SYSOP)
 		vwrite_user(user, "On from site : %s\n", u->site);
 	    else
 		vwrite_user(user, "On from site : %-42.42s Port: %d\n", u->site, u->site_port);
 	}
     }
-    if (user->level >= HACKER) {
+    if (user->level >= SYSOP) {
 	write_user(user," |----- ~OL~FTWiz Only Info~RS --------------------------------------------------------|\n");
 	if (!u->muzzled)
 	    strcpy(muzlev, "Unmuzzled");
@@ -11779,7 +11779,7 @@ void examine(UR_OBJECT user) {
 	vwrite_user(user, "Was on for : %d hours, %d minutes\nTotal login: %d day%s, %d hour%s, %d minute%s\n",
 	        u->last_login_len/3600, (u->last_login_len % 3600) / 60, days, PLTEXT_S(days), hours, PLTEXT_S(hours),
 		mins, PLTEXT_S(mins));
-	if (user->level >= HACKER)
+	if (user->level >= SYSOP)
 		vwrite_user(user, "Last site  : %s\n", u->last_site);
 	if ((newmail = mail_sizes(u->name, 1)))
 	    vwrite_user(user, "%s~RS has unread mail (%d).\n", u->recap, newmail);
@@ -11805,7 +11805,7 @@ void examine(UR_OBJECT user) {
     vwrite_user(user, "Total login : %d day%s, %d hour%s, %d minute%s\n",
 		days, PLTEXT_S(days), hours, PLTEXT_S(hours), mins, PLTEXT_S(mins));
     if (u->socket >= 1)
-	if (user->level >= HACKER)
+	if (user->level >= SYSOP)
 	    vwrite_user(user, "Site        : %-40.40s  Port : %d\n", u->site, u->site_port);
 #ifdef NETLINKS
 	else
@@ -11875,7 +11875,7 @@ else strcpy(homepg,u->homepage);
 if (!strcmp(u->email,"#UNSET")) sprintf(email,"~FW~OLPlease set your email .set email~RS");
 else {
     if (!u->hideemail) strcpy(email,u->email);
-    else if (u->hideemail && (user->level>=PROGRAMMER || u==user)) sprintf(email,"%s ~FW~OL(~FTHIDDEN~FY)~RS",u->email);
+    else if (u->hideemail && (user->level>=CARE9 || u==user)) sprintf(email,"%s ~FW~OL(~FTHIDDEN~FY)~RS",u->email);
     else strcpy(email,"~OL~FTCurrently only on view to the Wizzes~RS");
     }
 sprintf(text2,"%s~RS %s",u->recap,u->desc);
@@ -11911,7 +11911,7 @@ if (!on || u->type==TYPE_LIMBO) {
   vwrite_user(user,"Was on for : %d hours, %d  minutes\nTotal login: %d day%-1s, %d hour%-1s, %d minute%-1s\n\n",
                 u->last_login_len/3600,(u->last_login_len%3600)/60,days,PLTEXT_S(days),hours,
 		PLTEXT_S(hours),mins,PLTEXT_S(mins));
-  if (user->level>=PROGRAMMER) vwrite_user(user,"Last site  : %-60s\n\n",u->last_site);
+  if (user->level>=CARE9) vwrite_user(user,"Last site  : %-60s\n\n",u->last_site);
   if ((newmail=mail_sizes(u->name,1))) vwrite_user(user,"~FT~OL%s has unread mail ~RS(~FR~OL%d~RS)~RS.\n\n",u->recap,newmail);
   if (!on) {
   destruct_user(u);
@@ -12552,13 +12552,13 @@ if(!strcmp(word[1],"taasmoko"))
     if (!validate_email(inpstr)) {
 	write_user(user, "That email address format is incorrect.  Correct format: user@network.net\n");
 	sprintf(text, "%s~RS %s~RS has entered an incorrect e-mail address: %s\n", WIZI, user->recap, inpstr);
-	write_level(HACKER, 1, 4, text, NULL);
+	write_level(SYSOP, 1, 4, text, NULL);
 	write_syslog(SYSLOG, 1, "%s tries to set '%s' as an email address.\n", user->name, inpstr);
 	return;
     }
     write_syslog(REQLOG, 1, "%-*s : %s\n", USER_NAME_LEN, user->name, inpstr);
     sprintf(text, "%s~RS %s~RS has done .accreq: %s.\n", WIZI, user->recap, inpstr);
-    write_level(HACKER, 1, 4, text, NULL);
+    write_level(SYSOP, 1, 4, text, NULL);
     write_user(user, "Account request logged.\n");
     add_history(user->name, 1, "Made a request for an account.\n");
 /* check to see if user should be promoted yet */
@@ -13426,7 +13426,7 @@ void go(UR_OBJECT user) {
 	    return;
         }
     }
-    if (user->level < HACKER) {
+    if (user->level < SYSOP) {
 	vwrite_user(user, "%s is not adjoined to here, try hailing a taxi.\n", rm->name);
 	return;
     }
@@ -13890,7 +13890,7 @@ void clear_topic(UR_OBJECT user) {
 	return;
     }
     if (!strcmp(word[1], "all")) {
-	if (user->level > command_table[CTOPIC].level || user->level >= HACKER) {
+	if (user->level > command_table[CTOPIC].level || user->level >= SYSOP) {
 	    for(rm = room_first; rm != NULL; rm = rm->next) {
 		if (rm->tlock <= user->level) {
 		    rm->topic[0] = '\0';
@@ -14200,14 +14200,14 @@ if ((u=get_user(word[1]))!=NULL) {
     }
 // replace all this with do_promo? kelotz
   if (user->vis) name=user->bw_recap; else name=invisname;
-  if (u->level>=HACKER) rem_wiz_node(u->name);
+  if (u->level>=SYSOP) rem_wiz_node(u->name);
   --amsys->level_count[u->level];
   (word_count==3)?u->level=level:u->level++; 
   u->unarrest=u->level;
   user_list_level(u->name,u->level);
   strcpy(u->date,(long_date(1)));
   ++amsys->level_count[u->level];
-  if (u->level>=HACKER) add_wiz_node(u->name,u->level);
+  if (u->level>=SYSOP) add_wiz_node(u->name,u->level);
   sprintf(text,"%s~RS ~OL~FGis promoted to level: ~FW%s%s~RS.\n",u->recap,user_level[u->level].color, user_level[u->level].name);
   write_level(NEW, 1, 2, text, u);
   vwrite_user(u,"%s~RS~OL~FG has promoted you to level: ~FW%s%s~RS~OL!\n",name,user_level[u->level].color, user_level[u->level].name);
@@ -14258,14 +14258,14 @@ if (u->level==NEW) {
   destructed=0;
   return;
   }
-if (u->level>=HACKER) rem_wiz_node(u->name);
+if (u->level>=SYSOP) rem_wiz_node(u->name);
 --amsys->level_count[u->level];
 (word_count==3)?u->level=level:u->level++;
 u->unarrest=u->level;
 u->real_level=u->level;
 user_list_level(u->name,u->level);
 ++amsys->level_count[u->level];
-if (u->level>=HACKER) add_wiz_node(u->name,u->level);
+if (u->level>=SYSOP) add_wiz_node(u->name,u->level);
 u->socket=-2;
 u->accreq=1;
 sprintf(text,"%s",long_date(1));
@@ -14301,7 +14301,7 @@ if (word_count>3) {
 if (word_count==3) {
   strtoupper(word[2]);
   if ((level=get_level(word[2]))==-1) {
-    vwrite_user(user,"You must select a level between %s and %s.\n",user_level[NEW].name,user_level[PROGRAMMER].name);
+    vwrite_user(user,"You must select a level between %s and %s.\n",user_level[NEW].name,user_level[CARE9].name);
     return;
     }
   }
@@ -14328,16 +14328,16 @@ if ((u=get_user(word[1]))!=NULL) {
     return;
     }
   if (user->vis) name=user->bw_recap; else name=invisname;
-  if (u->level>=HACKER) rem_wiz_node(u->name);
+  if (u->level>=SYSOP) rem_wiz_node(u->name);
   --amsys->level_count[u->level];
   /* if a user was a wiz then remove from retire list */
-  if (u->level==HACKER) clean_retire_list(u->name);
+  if (u->level==SYSOP) clean_retire_list(u->name);
   /* was a level given? */
   (word_count==3)?u->level=level:u->level--;
   u->unarrest=u->level;
   user_list_level(u->name,u->level);
   ++amsys->level_count[u->level];
-  if (u->level>=HACKER) add_wiz_node(u->name,u->level);
+  if (u->level>=SYSOP) add_wiz_node(u->name,u->level);
   strcpy(u->date,(long_date(1)));
   sprintf(text,"%s~RS~OL~FR is demoted to level: ~FW%s%s~RS~OL.\n",u->recap,user_level[u->level].color, user_level[u->level].name);
   write_level(NEW, 1, 2, text, u);
@@ -14389,17 +14389,17 @@ if (u->level>=user->level) {
   destructed=0;
   return;
   }
-if (u->level>=HACKER) rem_wiz_node(u->name);
+if (u->level>=SYSOP) rem_wiz_node(u->name);
 --amsys->level_count[u->level];
 /* if a user was a wiz then remove from retire list */
-if (u->level==HACKER) clean_retire_list(u->name);
+if (u->level==SYSOP) clean_retire_list(u->name);
 /* was a level given? */
 (word_count==3)?u->level=level:u->level--;
 u->unarrest=u->level;
 u->real_level=u->level;
 user_list_level(u->name,u->level);
 ++amsys->level_count[u->level];
-if (u->level>=HACKER) add_wiz_node(u->name,u->level);
+if (u->level>=SYSOP) add_wiz_node(u->name,u->level);
 u->socket=-2;
 u->vis=1;
 strcpy(u->site,u->last_site);
@@ -14419,7 +14419,7 @@ destructed=0;
 
 
 /*** Muzzle an annoying user so he cant speak, emote, echo, write, smail
-     or bcast. Muzzles have levels from HACKER to BOT so for instance a wiz
+     or bcast. Muzzles have levels from SYSOP to BOT so for instance a wiz
      cannot remove a muzzle set by a god.  ***/
 void muzzle(UR_OBJECT user)
 {
@@ -14934,7 +14934,7 @@ if (this_user) {
   write_user(user,"\n~FR~LI~OLACCOUNT DELETED!\n");
   vwrite_room_except(user->room,user,"~OL~LI%s commits suicide!\n",user->name);
   write_syslog(SYSLOG,1,"%s SUICIDED.\n",name);
-  if (user->level>=HACKER) rem_wiz_node(user->name);
+  if (user->level>=SYSOP) rem_wiz_node(user->name);
   disconnect_user(user);
   clean_retire_list(name);
   clean_files(name);
@@ -14976,7 +14976,7 @@ if (u->level>=user->level) {
 clean_files(u->name);
 clean_retire_list(u->name);
 rem_user_node(u->name,-1);
-if (u->level>=HACKER) rem_wiz_node(u->name);
+if (u->level>=SYSOP) rem_wiz_node(u->name);
 amsys->level_count[u->level]--;
 vwrite_user(user,"\07~FR~OL~LIUser %s deleted!\n",u->name);
 write_syslog(SYSLOG,1,"%s DELETED %s.\n",user->name,u->name);
@@ -15043,7 +15043,7 @@ while (entry!=NULL) {
     case 1: /* manual default */
       if (u->expire && (time(0)>u->t_expire)) {
         rem_user_node(u->name,-1);
-	if (u->level>=HACKER) rem_wiz_node(u->name);
+	if (u->level>=SYSOP) rem_wiz_node(u->name);
         clean_files(u->name);
 	clean_retire_list(u->name);
         amsys->level_count[u->level]--;
@@ -15057,7 +15057,7 @@ while (entry!=NULL) {
     case 2: /* purge on site */
       if (u->expire && pattern_match(u->last_site,purge_site)) {
         rem_user_node(u->name,-1);
-	if (u->level>=HACKER) rem_wiz_node(u->name);
+	if (u->level>=SYSOP) rem_wiz_node(u->name);
         clean_files(u->name);
 	clean_retire_list(u->name);
         amsys->level_count[u->level]--;
@@ -15071,7 +15071,7 @@ while (entry!=NULL) {
     case 3: /* given amount of days */
       if (u->expire && (u->last_login<(time(0)-(purge_days*86400)))) {
         rem_user_node(u->name,-1);
-	if (u->level>=HACKER) rem_wiz_node(u->name);
+	if (u->level>=SYSOP) rem_wiz_node(u->name);
         clean_files(u->name);
 	clean_retire_list(u->name);
         amsys->level_count[u->level]--;
@@ -15519,7 +15519,7 @@ write_user(user,"| ~FT~OLThe last users to have logged in~RS                    
 write_user(user,"|----------------------------------------------------------------------------|\n");
 for (i=0;i<LASTLOGON_NUM;i++) {
   if (!last_login_info[i].name[0]) continue;
-  if (last_login_info[i].on && (!(u=get_user(last_login_info[i].name))->vis && user->level<HACKER)) continue;
+  if (last_login_info[i].on && (!(u=get_user(last_login_info[i].name))->vis && user->level<SYSOP)) continue;
   sprintf(line,"%s %s",last_login_info[i].name,last_login_info[i].time);
   if (last_login_info[i].on) sprintf(text,"| %-67s ~OL~FYONLINE~RS |\n",line);
   else sprintf(text,"| %-74s |\n",line);
@@ -16172,11 +16172,11 @@ void show_ranks(UR_OBJECT user) {
 	else
 	    ptr = null;
 
-	if (i == HACKER)
+	if (i == SYSOP)
 	    write_user(user, LINEA);
 	vwrite_user(user, "| %s%s%-14.14s~RS%s : %2d cmds this level : ",
 		ptr, user_level[i].color, user_level[i].name, ptr, cnt[i]);
-	if (i > USER && i < HACKER) {
+	if (i > USER && i < SYSOP) {
 	    vwrite_user(user, "%2d %-5.5s %-29.29s~RS |\n",
 		user_level[i - 1].promotime / 3600, "hours", user_level[i].info);
 	} else
@@ -16197,9 +16197,9 @@ void wiz_list(UR_OBJECT user) {
     struct wiz_list_struct *entry;
 
     vwrite_user(user,LINEY);
-    vwrite_user(user,"~OL~FWList Of ALCOHOLIC/HACKERs of ~OL~FT[ ~FWChat Manila ~FT]~RS\n");
+    vwrite_user(user,"~OL~FWList Of CARE1/SYSOP of ~OL~FT[ ~FWChat Manila ~FT]~RS\n");
     vwrite_user(user,LINEY);
-    for (i = ROOT2; i >= HACKER; i--) {
+    for (i = ROOT2; i >= SYSOP; i--) {
 	text2[0] = '\0';  cnt = 0;  inlist = 0;
 	sprintf(text, "%s%-10s : ", user_level[i].color, user_level[i].name);
 	for(entry = first_wiz_entry; entry != NULL; entry = entry->next) {
@@ -16318,7 +16318,7 @@ vwrite_user(user," Total number of rooms    : ~OL%-3d~RS   Swear ban currently o
 vwrite_user(user," Smail auto-forwarding on : ~OL%s~RS   Auto purge on            : ~OL%s~RS            \n",noyes2[amsys->forwarding],noyes2[amsys->auto_purge]);
 vwrite_user(user," Maximum smail copies     : ~OL%-3d~RS   Names can be recapped    : ~OL%s~RS            \n",MAX_COPIES,noyes2[amsys->allow_recaps]);
 vwrite_user(user," Personal rooms active    : ~OL%-3s~RS   Maximum user idle time   : ~OL%-3d~RS mins~RS       \n",noyes2[amsys->personal_rooms],amsys->user_idle_time/60);
-if (user->level>=HACKER) {
+if (user->level>=SYSOP) {
 #ifdef NETLINKS
   write_user(user," Compiled netlinks        : ~OLYES~RS                                             \n");
 #else
@@ -16563,8 +16563,8 @@ if ((u=get_user_name(user,word[1]))) {
     write_user(user,"You cannot retire yourself.\n");
     return;
     }
-  if (u->level<HACKER) {
-    write_user(user,"You cannot retire anyone under the level HACKER\n");  return;
+  if (u->level<SYSOP) {
+    write_user(user,"You cannot retire anyone under the level SYSOP\n");  return;
     }
         if(u->level >= user->level) {
 	    write_user(user, "You cannot retire someone of equal or greater rank that you.\n");
@@ -16592,8 +16592,8 @@ if (!load_user_details(u)) {
   destructed=0;
   return;
   }
-if (u->level<HACKER) {
-  write_user(user,"You cannot retire anyone under the level HACKER.\n");
+if (u->level<SYSOP) {
+  write_user(user,"You cannot retire anyone under the level SYSOP.\n");
   destruct_user(u);
   destructed=0;
   return;
@@ -16632,8 +16632,8 @@ if ((u=get_user_name(user,word[1]))) {
     write_user(user,"You cannot unretire yourself.\n");
     return;
     }
-  if (u->level<HACKER) {
-    write_user(user,"You cannot retire anyone under the level HACKER.\n");  return;
+  if (u->level<SYSOP) {
+    write_user(user,"You cannot retire anyone under the level SYSOP.\n");  return;
     }
   clean_retire_list(u->name);
   vwrite_user(user,"You unretire %s and put them back on the wizlist.\n",u->name);
@@ -19181,8 +19181,8 @@ if (u->level>=user->level) {
 strcpy(u->name,newname);
 strcpy(u->recap,u->name);
 strcpy(u->bw_recap,u->name);
-/* if user was a HACKER+ */
-if (u->level>=HACKER) {
+/* if user was a SYSOP+ */
+if (u->level>=SYSOP) {
   if (in_retire_list(oldname)) {
     clean_retire_list(oldname);
     add_retire_list(u->name);
