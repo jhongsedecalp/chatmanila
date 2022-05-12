@@ -15,7 +15,7 @@ void bank_money(UR_OBJECT user) {
         write_user(user, "Uh, oh. There is no bank in this talker. Better tell a Wiz.\n");
         return;
     }
-    if (user->room != rm && user->level < HACKER) {
+    if (user->room != rm && user->level < SYSOP) {
         vwrite_user(user, "You must be in %s to access your bank account.\n", rm->name);
         return;
     }
@@ -216,7 +216,7 @@ void global_money(UR_OBJECT user) {
 	    write_user(user, notloggedon);
 	    return;
 	}
-	if (u == user && user->level < HACKER) {
+	if (u == user && user->level < SYSOP) {
 	    write_user(user, "You cannot give money to yourself.\n");
 	    return;
 	}
