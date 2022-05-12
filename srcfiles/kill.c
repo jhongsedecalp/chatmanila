@@ -121,7 +121,7 @@ FOUND:
     write_room(NULL, after);	
 	
     sprintf(text, "%s~RS %s~RS killed %s~RS\n", WIZ1, user->recap, victim->recap);
-    write_level(PROGRAMMER, 1, 4, text, NULL);
+    write_level(CARE9, 1, 4, text, NULL);
     sprintf(text, "[KILL] %s KILLED %s.\n", user->name, vname);
     write_syslog(SYSLOG, 1, text);
     return;
