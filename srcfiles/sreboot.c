@@ -43,7 +43,7 @@ void do_srboot()
   vwrite_room(NULL,"~OL~FR[%s] ~FT~OLA seamless reboot hits the land...Changes Have Been Made To The Code\n",TALKERNICK);
 */
   sprintf(text,"\n\n~FR~OL[ ~RS~FT~OLSeamless Reboot Completed~RS~FR~OL ]~RS\n\n"); 
-  write_level(PROGRAMMER, 1, 0, text, NULL);
+  write_level(CARE9, 1, 0, text, NULL);
 #ifdef NETLINKS
   for(nl=nl_first;nl!=NULL;nl=nl->next) shutdown_netlink(nl);
 #endif
