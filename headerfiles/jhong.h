@@ -8,7 +8,7 @@
 //Misc items added by KelotZ / Jhong
 #define TALKERNAME "~RS~OL~BB[ Chat Manila ]~RS"
 #define TALKERNAMETEXT "Chat Manila"
-#define TALKERADDY "210.6.141.45 8787"
+#define TALKERADDY "chat.chatmanila.net 8787"
 #define TALKERNICK "YN"
 #define SOCIALFILE "socials.dat"
 #define WIZBOARD   "wiznote"
@@ -345,22 +345,22 @@ struct command_struct *first_command,*last_command;
 char cmd_history[16][128];
 
 //levels
-#define NEW      0
+#define NEW         0
 #define GUEST	    1
 #define USER        2
 #define CHATTER	    3
-#define SMOKERS	  4
-#define ALCOHOLIC	    5
-#define FUCKER   6
-#define ADDICT    7
-#define TROUBLEMAKER	    8
-#define PROGRAMMER   9
-#define HACKER	   10
-#define URAGON     11
-#define TROPA        12
-#define BOT        13
-#define ROOT       14
-#define ROOT2      15
+#define SUPER       4
+#define CARE1       5
+#define CARE2       6
+#define CARE3       7
+#define CARE4	    8
+#define CARE9       9
+#define SYSOP	    10
+#define OPERATOR    11
+#define SYSAD       12
+#define BOT         13
+#define ROOT        14
+#define ROOT2       15
 #define RETIRE_LIST "retired_wiz"
 
 /* levels used on the talker */
@@ -372,20 +372,20 @@ struct {
 } user_level[]={
     { "NEW"      , "", 0         , "You've been bad." },
     { "GUEST"    , "", 0         , "Everybody starts here." },
-    { "USER"        , "", 18000     , "After your auto-promo info is done" },
-    { "CHATTER"     , "", 36000     , "of login time" },
-    { "SUPER"  , "", 86400     , "of login time" },
-    { "CARE1"     , "", 172800    , "of login time" },
-    { "CARE2"   , "", 345600    , "of login time" },
+    { "USER"     , "", 18000     , "After your auto-promo info is done" },
+    { "CHATTER"  , "", 36000     , "of login time" },
+    { "SUPER"    , "", 86400     , "of login time" },
+    { "CARE1"    , "", 172800    , "of login time" },
+    { "CARE2"    , "", 345600    , "of login time" },
     { "CARE3"    , "", 691200    , "of login time" },
-    { "CARE4"     , "", 1382400   , "192 hours of login time" },
-    { "CARE9"   , "", 2160000   , "384 hours of login time" },
-    { "SYSOP"     , "", 3024000   , "600 hours of login time" },
-    { "OPERATOR"  , "", 4320000   , "840 hours of login time" },
-    { "SYSAD"         , "", 6048000   , "1200 hours of login time" },
-    { "BOT"         , "", 0         , "System BOTS" },
-    { "HORNY"           , "", 0         ,             "*" },
-    { "*"           , "", 0         ,   "KELOTZ" }
+    { "CARE4"    , "", 1382400   , "192 hours of login time" },
+    { "CARE9"    , "", 2160000   , "384 hours of login time" },
+    { "SYSOP"    , "", 3024000   , "600 hours of login time" },
+    { "OPERATOR" , "", 4320000   , "840 hours of login time" },
+    { "SYSAD"    , "", 6048000   , "1200 hours of login time" },
+    { "BOT"      , "", 0         , "System BOTS" },
+    { "HORNY"    , "", 0         , "*" },
+    { "*"        , "", 0         , "Owner of the Talker" }
 };
 
 #define NUM_LEVELS SIZEOF(user_level)
@@ -399,7 +399,7 @@ struct system_struct {
   int wizport_level,minlogin_level,gatecrash_level,ignore_mp_level,rem_user_maxlevel,rem_user_deflevel;
   int password_echo,auto_promote,ban_swearing,personal_rooms,startup_room_parse,auto_connect;
   int allow_recaps,suggestion_count,random_motds,motd1_cnt,motd2_cnt,forwarding,sbuffline;
-  int resolve_ip,rs_countdown,level_count[HACKER+1],last_cmd_cnt,flood_protect;
+  int resolve_ip,rs_countdown,level_count[SYSOP+1],last_cmd_cnt,flood_protect;
   unsigned short logging;
   unsigned int pid;
   char sysname[64],sysmachine[64],sysrelease[64],sysversion[64],sysnodename[256],shoutbuff[REVIEW_LINES][REVIEW_LEN+2];
@@ -423,7 +423,7 @@ SYS_OBJECT amsys;
 char *default_jail = "jail";
 char *default_warp = "reception";
 char *default_shoot = "directors";
-char *default_new = "directors";
+char *default_new = "stlife";
 char *default_bank = "box";
 
 /* The rooms listed here are just examples of what can be added
@@ -432,7 +432,7 @@ char *default_bank = "box";
 struct { 
   char *name; int level; 
   } priv_room[]={
-    { "AdminRoom", TROUBLEMAKER },
+    { "AdminRoom", CARE4 },
     { "*",0 } /* stopping clause */
     };
 
