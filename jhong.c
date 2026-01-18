@@ -886,7 +886,7 @@ void reset_user(UR_OBJECT user) {
     user->invite_by[0]='\0';
     strcpy(user->logout_room,room_first->name);
     strcpy(user->date,(long_date(1)));
-    strcpy(user->icq,"#UNSET");
+    strcpy(user->tele,"#UNSET");
     for (i=0; i<MAX_IGNORES; ++i) user->ignoreuser[i][0]='\0';
     for (i=0;i<MAX_COPIES;++i) user->copyto[i][0]='\0';
     for (i=0;i<10;++i) user->macros[i][0]='\0';
@@ -3378,7 +3378,7 @@ while(!feof(fp)) {
 	    case 10: user->show_pass=atoi(user_words[i]);  break;
 	    case 11: user->show_rdesc=atoi(user_words[i]);  break;
 	    case 12: user->cmd_type=atoi(user_words[i]);  break;
-	    case 13: strcpy(user->icq,user_words[i]);  break;
+	    case 13: strcpy(user->tele,user_words[i]);  break;
 	    }
 	break;
       case 7:
@@ -3509,7 +3509,7 @@ int save_user_details(UR_OBJECT user, int save_current) {
 		user->gender, user->age, user->wrap, user->pager,
 		user->hideemail, user->colour, user->lroom, user->alert,
 		user->autofwd, user->show_pass, user->show_rdesc, user->cmd_type,
-		user->icq);
+		user->tele);
     fprintf(fp, "user_ignores  %d %d %d %d %d %d %d %d %d %d\n",
 		user->ignall, user->igntells, user->ignshouts, user->ignpics,
 		user->ignlogons, user->ignwiz, user->igngreets, user->ignbeeps,
@@ -11556,7 +11556,7 @@ void review(UR_OBJECT user) {
 void status(UR_OBJECT user) {
     UR_OBJECT u;
     char ir[ROOM_NAME_LEN+1], text2[ARR_SIZE], text3[ARR_SIZE], rm[3], qcall[USER_NAME_LEN];
-    char homepg[82], email[82], icq[ICQ_LEN < 15 ? 15 : ICQ_LEN], nm[5], muzlev[20], arrlev[20];
+    char homepg[82], email[82], tele[TELE_LEN < 15 ? 15 : TELE_LEN], nm[5], muzlev[20], arrlev[20];
     int days, hours, mins, hs, on, cnt, newmail;
 
     if (word_count < 2) {
@@ -11627,14 +11627,14 @@ void status(UR_OBJECT user) {
 	    strcpy(email, "~OL(HIDDEN)~RS");
     }
 
-    if (!strcmp(u->icq, "#UNSET"))
-	sprintf(icq, "Currently unset");
+    if (!strcmp(u->tele, "#UNSET"))
+	sprintf(tele, "Currently unset");
     else
-	strcpy(icq, u->icq);
+	strcpy(tele, u->tele);
 
     vwrite_user(user, "Email Address: %s\n", email);
     vwrite_user(user, "Homepage URL : %s\n", homepg);
-    vwrite_user(user, "ICQ Number   : %s\n", icq);
+    vwrite_user(user, "Telegram Number   : %s\n", tele);
     mins = (u->total_login % 3600) / 60;
     vwrite_user(user, "Total Logins : %-9d Total Login Time: %d day%s, %d hour%s, %d minute%s\n",
 		u->logons, days, PLTEXT_S(days), hours, PLTEXT_S(hours), mins, PLTEXT_S(mins));
@@ -11832,7 +11832,7 @@ UR_OBJECT u;
 FILE *fp,*objectfp,*userobjfp;
 char buff[50],*strptr;
 char filename[80],text2[ARR_SIZE],text3[ARR_SIZE],timestr[ARR_SIZE];
-char homepg[82],email[82],aim[25],class[25],species[25],yahoo[25],msn[25],pim[25],icq[25];
+char homepg[82],email[82],aim[25],class[25],species[25],yahoo[25],msn[25],pim[25],tele[25];
 int on,days,hours,mins,timelen,days2,hours2,mins2,idle,cnt,newmail,money,count,spouse,bank;
 
 
@@ -11866,8 +11866,8 @@ timelen=(int)(time(0) - u->last_login);
 days2=timelen/86400;
 hours2=(timelen%86400)/3600;
 mins2=(timelen%3600)/60;
-if (!strcmp(u->icq,"#UNSET")) sprintf(icq,"None");
-else strcpy(icq,u->icq);
+if (!strcmp(u->tele,"#UNSET")) sprintf(tele,"None");
+else strcpy(tele,u->tele);
 if (!u->age) sprintf(text3,"Ageless");
 else sprintf(text3,"%d",u->age);
 if (!strcmp(u->homepage,"#UNSET")) sprintf(homepg,"~FW~OLPlease set your homepage .set www~RS");
@@ -11900,7 +11900,7 @@ sprintf(text,"Homepage   : %s\n",homepg);
 write_user(user,text);
 sprintf(text,"Cash       : $%d\nIn Bank    : $%d\n", u->money, u->bank);
 write_user(user,text);
-sprintf(text,"ICQ        : %-10s\n\n",icq);
+sprintf(text,"TELEGRAM        : %-10s\n\n",tele);
 write_user(user,text);
 if (!on || u->type==TYPE_LIMBO) {
   strcpy(timestr,ctime((time_t *)&(u->last_login)));
@@ -12228,19 +12228,19 @@ ATT_JUMP:
 	    vwrite_user(user, "Your name will now appear as \"%s~RS\" on the 'who', 'examine', tells, etc.\n", user->recap);
 	    return;
 
-	case SETICQ:
+	case SETTELE:
 	    strcpy(word[2], colour_com_strip(word[2]));
 	    if (!word[2][0])
-		strcpy(user->icq, "#UNSET");
-	    else if (strlen(word[2]) > ICQ_LEN) {
-		vwrite_user(user, "The maximum ICQ UIN length you can have is %d characters.\n", ICQ_LEN);
+		strcpy(user->tele, "#UNSET");
+	    else if (strlen(word[2]) > TELE_LEN) {
+		vwrite_user(user, "The maximum Telegram UIN length you can have is %d characters.\n", TELE_LEN);
 		return;
 	    } else
-		strcpy(user->icq, word[2]);
-	    if (!strcmp(user->icq, "#UNSET"))
-		write_user(user, "ICQ number set to: ~FRunset\n");
+		strcpy(user->tele, word[2]);
+	    if (!strcmp(user->tele, "#UNSET"))
+		write_user(user, "Telegram number set to: ~FRunset\n");
 	    else
-		vwrite_user(user, "ICQ number set to: ~FT%s\n", user->icq);
+		vwrite_user(user, "Telegram number set to: ~FT%s\n", user->tele);
 	    return;
 
 	case SETALERT:
@@ -12343,11 +12343,11 @@ while (setstr[i].type[0]!='*') {
       vwrite_user(user, " %-10.10s : %-*.*s~RS ", setstr[i].type, 20 + cnt * 3, 20 + cnt * 3, user->recap);
       break;
 
-    case SETICQ:
-      if (!strcmp(user->icq, "#UNSET"))
+    case SETTELE:
+      if (!strcmp(user->tele, "#UNSET"))
 	 sprintf(text, "unset");
       else
-	 sprintf(text, "~OL%s~RS", user->icq);
+	 sprintf(text, "~OL%s~RS", user->tele);
       vwrite_user(user, " %-10.10s : %-20.20s ", setstr[i].type, text);
       break;
 
@@ -15279,7 +15279,7 @@ if (!load_user_details(u)) {
   strcpy(u->verify_code,"#NONE");
   strcpy(u->email,"#UNSET");
   strcpy(u->homepage,"#UNSET");
-  strcpy(u->icq,"#UNSET");
+  strcpy(u->tele,"#UNSET");
   u->prompt=amsys->prompt_def;
   u->charmode_echo=0;
   u->room=room_first;
@@ -19327,3 +19327,4 @@ void watchuser(UR_OBJECT user, char *inpstr) {
 	strcpy(user->watching, u->name);  
     }
 }
+
