@@ -19,10 +19,11 @@
 ~OL~FB
 ~OL
 ~OL ~FB,~RS~OL~FW+~FB~OL------------------------------------------------------------------------------~FW+~FB,
-~OL~FB(   ~FTtelnet://210.6.141.45:8787                    ~FThttp://chatmanila.forumcab.com~RS~OL~FB   )
+~OL~FB(   ~FTtelnet://chatmanila.ovh:8787                    ~FThttp://chatmanila.ovh~RS~OL~FB   )
 ~OL ~FB`~FW+~FB------------------------------------------------------------------------------~FW+~FB'
 ~OL                ~FW+~FY------------------------------------------------~FW+
 ~OL                ~FY|   ~FWtype '~FRwho~RS~OL~FW' at the prompt to see who is on    ~FY|~RS
 ~OL                ~FY|   ~FWtype '~FRquit~RS~OL~FW' at the prompt to quit your login ~FT|~RS
 ~OL                ~FW+~FY------------------------------------------------~FW+
                                         
+
