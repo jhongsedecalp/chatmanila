@@ -133,7 +133,7 @@
 #define PASS_LEN 20 /* only the 1st 8 chars will be used by crypt() though */
 #define ROOM_DESC_LEN (MAX_LINES*80)+MAX_LINES /* MAX_LINES lines of 80 chars each + MAX_LINES nl */
 #define TOPIC_LEN 60
-#define ICQ_LEN 20
+#define TELE_LEN 20
 #define NEUTER 0
 #define MALE   1
 #define FEMALE 2
@@ -213,7 +213,7 @@ struct user_struct {
   char bw_recap[USER_NAME_LEN+1],call[USER_NAME_LEN+1],macros[10][MACRO_LEN],friend[MAX_FRIENDS][USER_NAME_LEN+1];
   char verify_code[80],afkbuff[REVTELL_LINES][REVIEW_LEN+2],editbuff[REVTELL_LINES][REVIEW_LEN+2];
   char samesite_check_store[ARR_SIZE],hang_word[WORD_LEN+1],hang_word_show[WORD_LEN+1],hang_guess[WORD_LEN+1];
-  char *malloc_start,*malloc_end,icq[ICQ_LEN+1];
+  char *malloc_start,*malloc_end,tele[TELE_LEN+1];
   int type,login,attempts,vis,ignall,prompt,command_mode,muzzled,charmode_echo;
   int gender,hideemail,edit_line,warned,accreq,ignall_store,igntells,real_level;
   int afk,clone_hear,colour,ignshouts,unarrest,arrestby,pager,expire,lroom,monitor;
