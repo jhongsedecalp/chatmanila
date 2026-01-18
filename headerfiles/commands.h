@@ -614,7 +614,7 @@ struct {
 	{"rdesc", "lets you ignore room descriptions (toggle)"},
 	{"command", "Displays the command lisiting differently (toggle)"},
 	{"recap", "Allows you to have color in your name"},
-	{"icq", "Allows you to put in your ICQ number"},
+	{"tele", "Allows you to put in your Telegram number"},
 	{"alert", "lets you know when someone in your friends list logs on (toggle)"},
 	{"*", ""}
   };
@@ -622,6 +622,7 @@ enum setval {
   SETSHOW,        SETGEND,        SETAGE,     SETEMAIL,       SETHOMEP,
   SETMAIL,	  SETHIDEEMAIL,   SETWRAP,    SETPAGER,       SETCOLOUR,      SETROOM,
   SETFWD,         SETPASSWD,      SETRDESC,   SETCOMMAND,     SETRECAP,
-  SETICQ,         SETALERT
+  SETTELE,         SETALERT
   } set_val;
+
 
