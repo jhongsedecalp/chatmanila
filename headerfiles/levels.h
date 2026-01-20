@@ -18,7 +18,7 @@
 #define RETIRE_LIST "retired_wiz"
 
 /* levels used on the talker */
-struct {
+typedef struct {
   char *name;
   char *color;
   int promotime; //in seconds; time needed to get to next level
