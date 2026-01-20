@@ -5,6 +5,8 @@
 #define NUTSVER "3.3.3"
 #define USERVER "0.3"
 
+#include "levels.h" 
+
 //Misc items added by KelotZ / Jhong
 #define TALKERNAME "~RS~OL~BB[ Chat Manila ]~RS"
 #define TALKERNAMETEXT "Chat Manila"
@@ -344,6 +346,7 @@ struct command_struct {
 struct command_struct *first_command,*last_command;
 char cmd_history[16][128];
 
+/****************************************************************
 //levels
 #define NEW         0
 #define GUEST	    1
@@ -387,6 +390,7 @@ struct {
     { "HORNY"    , "", 0         , "*" },
     { "*"        , "", 0         , "Owner of the Talker" }
 };
+**********************************************************/
 
 #define NUM_LEVELS SIZEOF(user_level)
 
