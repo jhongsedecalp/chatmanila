@@ -8880,8 +8880,6 @@ int cnt,lev,total,lines;
 char text2[ARR_SIZE],temp[20],temp1[20];
 struct command_struct *cmd;
 
-lines = 0;
-
 if (!is_wrap) {
   /* write out the header */
   vwrite_user(user, "\n%s", LINEA);
@@ -8908,12 +8906,15 @@ if (is_wrap) {
     }
   }
 /* scroll trough all the commands listing by level */
-total=0;
+total=0; lines=0;
 for(lev=user->hwrap_lev;lev<=user->level;++lev) {
   cnt=0;
   /* colourize lines if need be */
-  if (!is_wrap || (is_wrap && !user->hwrap_same)) {
-    sprintf(text,"~OL~FR(~FW%s%s~FR)~RS\n    ",user_level[lev].color, user_level[lev]);
+  if (!is_wrap) {
+    sprintf(text,"\n~OL~FR(~FW%s%s~FR)~RS\n    ",user_level[lev].color, user_level[lev].name);
+    }
+  else if (!is_wrap || (is_wrap && !user->hwrap_same)) {
+    sprintf(text,"\n~OL~FR(~FW%s%s~FR)~RS\n    ",user_level[lev].color, user_level[lev].name);
     lines++;
     }
   else sprintf(text,"    ");
@@ -19327,4 +19328,5 @@ void watchuser(UR_OBJECT user, char *inpstr) {
 	strcpy(user->watching, u->name);  
     }
 }
+
 
