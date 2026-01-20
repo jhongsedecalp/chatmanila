@@ -366,7 +366,7 @@ char cmd_history[16][128];
 #define ROOT2       15
 #define RETIRE_LIST "retired_wiz"
 
-/* levels used on the talker */
+// levels used on the talker 
 struct {
   char *name;
   char *color;
