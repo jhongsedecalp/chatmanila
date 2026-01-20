@@ -42,8 +42,6 @@ struct {
 	{ "ban",        "",    SYSOP,    CT_ADMIN   }, //listed before .bank
 	{ "go",         "",    USER,     CT_MOVE    }, //needs to be before gender (.g)
 	{ "ustat",      "",    CHATTER,  CT_USER    }, //.u
-
-//NEW 
 	{ "gender",     "",    NEW,      CT_USER    },
 	{ "desc",       "",    NEW,      CT_USER    },
 	{ "accreq",     "",    NEW,      CT_USER    },
@@ -56,10 +54,8 @@ struct {
 	{ "sos",        "",    NEW,   CT_SOCIAL  },
 	{ "who",        "@",   NEW,   CT_GENERAL },
 	{ "wizlist",    "",    NEW,   CT_GENERAL },
-    	{ "url",        "",    NEW,   CT_GENERAL },
-    	{ "criteria",   "",    NEW,   CT_GENERAL },
-
-//GUEST
+   	{ "url",        "",    NEW,   CT_GENERAL },
+   	{ "criteria",   "",    NEW,   CT_GENERAL },
 	{ "charecho",   "",    GUEST,      CT_USER    },
 	{ "look",       "",    GUEST,      CT_GENERAL },
 	{ "mode",       "",    GUEST,      CT_USER    },
@@ -69,8 +65,6 @@ struct {
 	{ "set",        "",    GUEST,      CT_USER    },
 	{ "suicide",    "",    GUEST,      CT_USER    },
 	{ "version",    "",    GUEST,      CT_GENERAL },
-
-//USER 
 	{ "afk",        "",    USER,     CT_USER    },
 	{ "croom",      "*",   USER,     CT_SOCIAL  }, //clr room
 	{ "cafk",       "",    USER,     CT_SOCIAL  },
@@ -116,13 +110,11 @@ struct {
 	{ "tell",       ">",   USER,     CT_SOCIAL  },
 	{ "time",       "",    USER,     CT_GENERAL },
 	{ "wake",       "",    USER,     CT_SOCIAL  },
-
-//CHATTER
 	{ "bank",	"",    SUPER,  CT_GENERAL },
 	{ "bfrom",      "",    SUPER,  CT_MSG     },
 	{ "calendar",   "",    SUPER,  CT_GENERAL },
 	{ "call",       "",    SUPER,  CT_SOCIAL  },
-        { "cash",       "",    SUPER,  CT_GENERAL },
+    { "cash",       "",    SUPER,  CT_GENERAL },
 	{ "emote",      ";",   SUPER,  CT_SOCIAL  },
 	{ "femote",     "",    SUPER,  CT_SOCIAL  },
 	{ "friends",    "",    SUPER,  CT_SOCIAL  },
@@ -140,8 +132,6 @@ struct {
 	{ "usay",       "",    SUPER,  CT_SOCIAL  },
 	{ "ushout",     "",    SUPER,  CT_SOCIAL  },
 	{ "write",      "",    SUPER,  CT_MSG     },
-
-//CARE1
 	{ "copyto",     "",    CARE1,   CT_MSG     },
 	{ "invite",     "",    CARE1,   CT_GENERAL },
 	{ "nocopies",   "",    CARE1,   CT_MSG     },
@@ -162,8 +152,6 @@ struct {
 	{ "ussing",     "",    CARE1,   CT_SOCIAL  },
 	{ "uthink",	"",    CARE1,   CT_SOCIAL  },
 	{ "usthink",    "",    CARE1,   CT_SOCIAL  },
-
-//CARE2
 	{ "allclones",  "",    CARE2,    CT_CLONE   },
 	{ "beep",       "",    CARE2,    CT_SOCIAL  },
 	{ "cshout",     "",    CARE2,    CT_SOCIAL  },
@@ -179,10 +167,8 @@ struct {
 	{ "show",       "'",   CARE2,    CT_SOCIAL  },
 	{ "shoot",      "",    CARE2,    CT_GENERAL },
 	{ "reload",     "",    CARE2,    CT_GENERAL },
-
-//CARE3
 	{ "boot",       "",    CARE3, CT_GENERAL },
-        { "csite",      "",    CARE3, CT_SOCIAL  },
+    { "csite",      "",    CARE3, CT_SOCIAL  },
 	{ "echo",       "+",   CARE3, CT_SOCIAL  },
 	{ "invis",      "",    CARE3, CT_USER    },
 	{ "lockrm",     "",    CARE3, CT_GENERAL },
@@ -191,8 +177,6 @@ struct {
 	{ "rmkey",      "",    CARE3, CT_GENERAL },
 	{ "secho",      "-",   CARE3, CT_SOCIAL  },
 	{ "vis",        "",    CARE3, CT_USER    },
-
-//CARE4
 	{ "atmos",      "",    CARE4,  CT_GENERAL },
 	{ "bring",      "",    CARE4,  CT_MOVE    },
 	{ "cemote",     "",    CARE4,  CT_CLONE   },
@@ -206,8 +190,6 @@ struct {
 	{ "system",     "",    CARE4,  CT_ADMIN   },
 	{ "tlock",      "",    CARE4,  CT_ADMIN   },
 	{ "wipe",       "",    CARE4,  CT_MSG     },
-
-//CARE9
 	{ "addhistory", "",    CARE9,     CT_ADMIN   },
 	{ "adminfiles", "",    CARE9,     CT_ADMIN   },
 	{ "bcast",      "",    CARE9,     CT_SOCIAL  },
@@ -232,8 +214,6 @@ struct {
 	{ "viewlog",    "",    CARE9,     CT_ADMIN   },
 	{ "wizrules",   "",    CARE9,     CT_GENERAL },
 	{ "wiztell",    "",    CARE9,     CT_SOCIAL  },
-
-//SYSOP
 	{ "bbcast",     "",    SYSOP,    CT_SOCIAL  },
 	{ "changename", "",    SYSOP,    CT_ADMIN   },
 	{ "clearline",  "",    SYSOP,    CT_ADMIN   },
@@ -247,8 +227,6 @@ struct {
 	{ "site",       "",    SYSOP,    CT_ADMIN   },
 	{ "tempromo",   "",    SYSOP,    CT_ADMIN   },
 	{ "unmuzzle",   "",    SYSOP,    CT_ADMIN   },
-
-//OPERATOR
 	{ "autopromo",  "",    OPERATOR,     CT_ADMIN   },
 	{ "arrest",     "",    OPERATOR,     CT_ADMIN   },
 	{ "create",     "",    OPERATOR,     CT_USER    },
@@ -272,30 +250,21 @@ struct {
 	{ "unban",      "",    OPERATOR,     CT_ADMIN   },
 	{ "unfix",      "",    OPERATOR,     CT_GENERAL },
 	{ "unretire",   "",    OPERATOR,     CT_ADMIN   },
-
-//SYSAD
-        { "force",      "",    SYSAD,      CT_ADMIN   },
-        { "clsall",     "",    SYSAD,      CT_ADMIN   },
-        { "assasin",    "",    SYSAD,      CT_ADMIN   }, 
-        { "xcom",       "",    SYSAD,      CT_ADMIN   },
-        { "nuke",       "",    SYSAD,      CT_ADMIN   }, 
+    { "force",      "",    SYSAD,      CT_ADMIN   },
+    { "clsall",     "",    SYSAD,      CT_ADMIN   },
+    { "assasin",    "",    SYSAD,      CT_ADMIN   }, 
+    { "xcom",       "",    SYSAD,      CT_ADMIN   },
+    { "nuke",       "",    SYSAD,      CT_ADMIN   }, 
 	{ "kill",       "",    SYSAD,      CT_ADMIN   },
-        { "minlogin",   "",    SYSAD,      CT_ADMIN   },
-
-//ROOT
-        { "setcmdlev",  "",    ROOT2,       CT_ADMIN   },             
-//ROOT2
-        { "watchuser",  "",    SYSOP,        CT_ADMIN   },
-
-//ROOT2
-        { "gcom",       "",    ROOT2,       CT_ADMIN   },
+    { "minlogin",   "",    SYSAD,      CT_ADMIN   },
+    { "setcmdlev",  "",    ROOT2,       CT_ADMIN   },             
+    { "watchuser",  "",    SYSOP,        CT_ADMIN   },
+    { "gcom",       "",    ROOT2,       CT_ADMIN   },
   	{ "reboot",     "",    ROOT2,       CT_ADMIN   },
-        { "sreboot",    "",    ROOT2,       CT_ADMIN   },
-        { "shutdown",   "",    ROOT2,       CT_ADMIN   },
-        { "bot",        "",    BOT,         CT_ADMIN   },
-        { "promote",    "",    ROOT,        CT_ADMIN   },
-
-
+    { "sreboot",    "",    ROOT2,       CT_ADMIN   },
+    { "shutdown",   "",    ROOT2,       CT_ADMIN   },
+    { "bot",        "",    BOT,         CT_ADMIN   },
+    { "promote",    "",    ROOT,        CT_ADMIN   },
 #ifdef NETLINKS
 	{ "connect",    "",    SYSOP,     CT_NETLINK },
 	{ "disconnect", "",    SYSOP,     CT_NETLINK },
@@ -305,9 +274,7 @@ struct {
 	{ "rnet",       "",    USER,        CT_NETLINK },
 	{ "rstat",      "",    CARE4,     CT_NETLINK },
 #endif
-//not gonna be using this, but i'll keep it anyway
  	{ "verify",     "",    GUEST,     CT_MSG     },
-// ditto
 	{ "visit",      "",    USER,    CT_MOVE    },
 	{ "*", "*", -1, -1 } /* stopping clause - do not remove */
 };
@@ -315,12 +282,9 @@ struct {
 
 /* VALUES OF COMMANDS, USED IN SWITCH IN EXEC_COM() */
 enum comvals {
-//Primaries
   BAN,
   GO,
   STATUS,
-
-//NEW
   GENDER,
   DESC,
   ACCREQ,
@@ -335,8 +299,6 @@ enum comvals {
   WIZLIST,
   URL,
   CRITERIA,
-
-//GUEST
   CHARECHO,
   LOOK,
   MODE,
@@ -346,8 +308,6 @@ enum comvals {
   SET,
   SUICIDE,
   VER,
-  
-//USER
   AFK,
   REVCLR,
   CAFK,
@@ -393,8 +353,6 @@ enum comvals {
   TELL,
   TIME,
   WAKE,
-
-//CHATTER
   BANK,
   BFROM,
   CALENDAR,
@@ -417,8 +375,6 @@ enum comvals {
   SAYTO,
   SHOUTTO,
   WRITE,
-  
-//SUPER
   COPYTO,
   INVITE,
   NOCOPIES,
@@ -439,8 +395,6 @@ enum comvals {
   USING,
   STHINKTO,
   UTHINK,
-
-//CARE1
   ALLCLONES,
   BEEP,
   CSHOUT,
@@ -456,8 +410,6 @@ enum comvals {
   SHOW,
   SHOOT,
   RELOAD,
-
-//CARE2
   MYBGONE,
   CSITE,
   ECHO,
@@ -468,8 +420,6 @@ enum comvals {
   MYKEY,
   SECHO,
   VIS,
-
-//CARE3
   ATMOS,
   BRING,
   CEMOTE,
@@ -483,8 +433,6 @@ enum comvals {
   SYSTEM,
   TLOCK,
   WIPE,
-
-//CARE4
   ADDHISTORY,
   DISPLAYADMIN,
   BCAST,
@@ -509,8 +457,6 @@ enum comvals {
   VIEWLOG,
   WIZRULES,
   WIZTELL,
-  
-//CARE9
   BBCAST,
   MORPH, //changename
   CLEARLINE,
@@ -524,8 +470,6 @@ enum comvals {
   SITE,
   TEMPRO,
   UNMUZZLE,
-
-//SYSOP
   SETAUTOPROMO,
   ARREST,
   ACCOUNT, //create
@@ -549,39 +493,25 @@ enum comvals {
   UNBAN,
   UNFIX,
   UNRETIRE,
-
-//OPERATOR
   FORCE,
   CLSALL,
   ASSASIN,
-
-//SYSAD
   XCOM,
   NUKE,
   KILL,
   MINLOGIN,
-
-//BOT
   SETCMDLEV,
-
-//ROOT
   WATCHUSER,
-
-
-//ROOT2
   GCOM,
   REBOOT,
   SREB,
   SHUTDOWN,
   BOTCMDS,
   PROMOTE,
-
-   VERIFY,
-   VISIT
-   
-
+  VERIFY,
+  VISIT,
 #ifdef NETLINKS
-  , HOME,
+  HOME,
   RSTAT,
   RMSN,
   NETSTAT,
@@ -589,7 +519,6 @@ enum comvals {
   CONN,
   DISCONN,
 #endif
-
 } com_num;
 
 
@@ -624,5 +553,6 @@ enum setval {
   SETFWD,         SETPASSWD,      SETRDESC,   SETCOMMAND,     SETRECAP,
   SETTELE,         SETALERT
   } set_val;
+
 
 
